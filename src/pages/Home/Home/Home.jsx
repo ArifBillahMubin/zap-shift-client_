@@ -5,6 +5,7 @@ import OurServices from '../OurServices/OurServices';
 import OurBrands from '../OurBrands/OurBrands';
 import { Feather } from 'lucide-react';
 import Features from '../Features/Features';
+import MerchantAndCustomer from '../MerchantAndCustomer/MerchantAndCustomer';
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
             <OurServices></OurServices>
             <OurBrands></OurBrands>
             <Features></Features>
+            <MerchantAndCustomer></MerchantAndCustomer>
         </div>
     );
 };
