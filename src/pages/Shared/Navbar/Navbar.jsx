@@ -5,7 +5,7 @@ import Logo from '../../../component/Logo/Logo';
 const Navbar = () => {
     const lints = <>
         <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/item3">Item 3</NavLink></li>
+        <li><NavLink to="/coverage">Coverage</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm px-4 py-2 rounded-2xl relative top-4">
