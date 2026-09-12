@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
     const {
@@ -49,9 +51,11 @@ const Login = () => {
                     }
 
                     <div><a className="link link-hover">Forgot password?</a></div>
-                    <button className="btn btn-neutral mt-4 w-32">Login</button>
+                    <button className="btn btn-primary text-secondary mt-4 w-32">Login</button>
                 </fieldset>
             </form>
+            <p className='py-2'>Don’t have any account? <Link className='text-primary underline' to={'/register'}>Register</Link></p>
+            <SocialLogin></SocialLogin>
         </div>
     );
 };
