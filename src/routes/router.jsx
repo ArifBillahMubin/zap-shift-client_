@@ -5,6 +5,8 @@ import Coverage from "../pages/Coverage/Coverage";
 import AuthLayout from "../layout/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import BeARider from "../pages/BeARider/BeARider";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +21,10 @@ export const router = createBrowserRouter([
                 path: "/coverage",
                 element:<Coverage></Coverage>,
                 loader: ()=> fetch("/warehouses.json").then(res=> res.json())
+            },
+            {
+                path: "/beARider",
+                element: <PrivateRoute><BeARider></BeARider></PrivateRoute>
             }
         ]
     },

@@ -1,8 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import Logo from '../../../component/Logo/Logo';
+import useAuth from '../../../hooks/useAuth';
+import PrimaryButton from '../../../component/Button/PrimaryButton/PrimaryButton';
+import { ArrowUpRight } from 'lucide-react';
 
 const Navbar = () => {
+    const { user, logout } = useAuth();
+
+    const handleLogout = () => {
+        logout().then().catch(error => console.log(error))
+    }
+
     const lints = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/coverage">Coverage</NavLink></li>
@@ -27,8 +36,17 @@ const Navbar = () => {
                     {lints}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn">Button</a>
+            <div className="navbar-end ">
+                {
+                    user ? <button className="btn rounded-full  text-secondary" onClick={handleLogout}>Logout</button> : <Link to={'/login'} className="btn rounded-full  text-secondary">LogIn</Link>
+                }
+
+                <div className='flex items-center ml-2'>
+                    <Link className="btn rounded-full bg-primary text-secondary" to={'/beARider'}>Be a Rider</Link>
+                    <div className='rounded-full bg-secondary p-1 '>
+                        <ArrowUpRight className='text-primary' />
+                    </div>
+                </div>
             </div>
         </div>
     );
