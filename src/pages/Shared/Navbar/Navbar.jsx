@@ -15,6 +15,7 @@ const Navbar = () => {
     const lints = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/coverage">Coverage</NavLink></li>
+        <li><NavLink to="/sendParcel">Send Parcel</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm px-4 py-2 rounded-2xl relative top-4">

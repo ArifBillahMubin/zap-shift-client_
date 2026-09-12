@@ -7,6 +7,7 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import BeARider from "../pages/BeARider/BeARider";
 import PrivateRoute from "./PrivateRoute";
+import SendParcel from "../pages/SendParcel/SendParcel";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +26,11 @@ export const router = createBrowserRouter([
             {
                 path: "/beARider",
                 element: <PrivateRoute><BeARider></BeARider></PrivateRoute>
+            },
+            {
+                path: "/sendParcel",
+                element:<PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
+                loader: () => fetch("/warehouses.json").then(res => res.json())
             }
         ]
     },
