@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
@@ -12,10 +12,15 @@ const Login = () => {
     } = useForm()
     
     const { signinUser } = useAuth();
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const handleSing = (data)=>{
         signinUser(data.email, data.password)
             .then(result => {
                 console.log(result.user)
+                navigate(location?.state || "/")
             }).catch(error =>
                 console.log(error)
             )
@@ -54,7 +59,7 @@ const Login = () => {
                     <button className="btn btn-primary text-secondary mt-4 w-32">Login</button>
                 </fieldset>
             </form>
-            <p className='py-2'>Don’t have any account? <Link className='text-primary underline' to={'/register'}>Register</Link></p>
+            <p className='py-2'>Don’t have any account? <Link state={location.state} className='text-primary underline' to={'/register'}>Register</Link></p>
             <SocialLogin></SocialLogin>
         </div>
     );
