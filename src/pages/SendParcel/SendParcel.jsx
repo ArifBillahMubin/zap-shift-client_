@@ -2,6 +2,7 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const SendParcel = () => {
     const {
@@ -15,20 +16,91 @@ const SendParcel = () => {
     const regions = WarehouseData.map(warehouse => warehouse.region);
     const region = [...new Set(regions)]
     // console.log(region)
-    
 
-    const senderRegion = useWatch({control ,name: 'senderRegion'})
+
+    const senderRegion = useWatch({ control, name: 'senderRegion' })
     const receiverRegion = useWatch({ control, name: 'receiverRegion' })
 
-    const districtByRegion = (region)=>{
+    const districtByRegion = (region) => {
         const regionWarehouses = WarehouseData.filter(warehouse => warehouse.region === region);
-        const districts = regionWarehouses.map(d=>d.district)
+        const districts = regionWarehouses.map(d => d.district)
         return districts;
     }
 
+    // {
+    //     "parcelType": "Document",
+    //      "parcelName": "pn",
+    //       "parcelWeight": "4.7",
+    //          "senderName": "sn",
+    //                     "senderAddress": "a",
+    //                         "senderEmail": "arifbillahmubin@gmail.com",
+    //                             "senderPhone": "01405428933",
+    //                                 "senderRegion": "Chattogram",
+    //                                     "senderDistrict": "Chattogram",
+    //                                         "pickupInstruction": "45.3",
+    //                                             "receiverName": "rn",
+    //                                                 "receiverAddress": "ra",
+    //                                                     "receiverEmail": "redoanur03@gmail.com",
+    //                                                         "receiverPhone": "01405428933",
+    //                                                             "receiverRegion": "Barisal",
+    //                                                                 "receiverDistrict": "Barisal",
+    //                                                                     "deliveryInstruction": "430"
+    // }
+
     const handelSendParcel = (data) => {
-        console.log(data);
+        // console.log(data);
+        const isDocument = data.parcelType === 'Document';
+        const isSameDistrict = data.senderDistrict === data.receiverDistrict;
+        const parcelWeight = parseFloat(data.parcelWeight)
+        let cost = 0;
+
+        if(isDocument){
+            cost = (isSameDistrict) ? 60 : 80;
+        }else{
+            if (parcelWeight < 3) {
+               cost = (isSameDistrict) ? 110 : 150;
+            }else{
+                const minCharge = (isSameDistrict) ? 110 : 150;
+                const extraWeight = parcelWeight -3;
+                const extraCharge = extraWeight * 40;
+                (isSameDistrict) ? cost= minCharge + extraCharge : cost= minCharge + extraCharge + 40
+            }
+        }
+        
+        console.log( 'cost = ',cost);
+
+        //sweetAlert 2 added in confirmation
+        Swal.fire({
+            title: "Confirm Parcel?",
+            text: `Your charge is ৳${cost}`,
+            icon: "info",
+
+            showCancelButton: true,
+            confirmButtonText: `Pay ৳${cost}`,
+            cancelButtonText: "Cancel",
+
+            buttonsStyling: false,
+
+            customClass: {
+                popup: "rounded-3xl p-6",
+                title: "text-2xl font-bold text-gray-800",
+                htmlContainer: "text-gray-500",
+
+                confirmButton:
+                    "bg-secondary hover:opacity-90 text-white font-semibold px-6 py-3 rounded-xl mx-2",
+
+                cancelButton:
+                    "bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-xl mx-2",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("Proceed to payment");
+            }
+        });
+
     };
+
+
 
     return (
         <div className="my-10 md:my-15 bg-white p-5 md:p-10 rounded-4xl">
