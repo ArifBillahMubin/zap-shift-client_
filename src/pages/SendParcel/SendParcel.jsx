@@ -3,6 +3,8 @@ import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SendParcel = () => {
     const {
@@ -11,6 +13,10 @@ const SendParcel = () => {
         formState: { errors },
         control
     } = useForm();
+
+    const {user}= useAuth();
+    // console.log(user)
+    const axiosSecure = useAxiosSecure();
 
     const WarehouseData = useLoaderData();
     const regions = WarehouseData.map(warehouse => warehouse.region);
@@ -27,25 +33,7 @@ const SendParcel = () => {
         return districts;
     }
 
-    // {
-    //     "parcelType": "Document",
-    //      "parcelName": "pn",
-    //       "parcelWeight": "4.7",
-    //          "senderName": "sn",
-    //                     "senderAddress": "a",
-    //                         "senderEmail": "arifbillahmubin@gmail.com",
-    //                             "senderPhone": "01405428933",
-    //                                 "senderRegion": "Chattogram",
-    //                                     "senderDistrict": "Chattogram",
-    //                                         "pickupInstruction": "45.3",
-    //                                             "receiverName": "rn",
-    //                                                 "receiverAddress": "ra",
-    //                                                     "receiverEmail": "redoanur03@gmail.com",
-    //                                                         "receiverPhone": "01405428933",
-    //                                                             "receiverRegion": "Barisal",
-    //                                                                 "receiverDistrict": "Barisal",
-    //                                                                     "deliveryInstruction": "430"
-    // }
+
 
     const handelSendParcel = (data) => {
         // console.log(data);
@@ -94,7 +82,13 @@ const SendParcel = () => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("Proceed to payment");
+                // console.log("Proceed to payment");
+                axiosSecure.post('/parcels',data)
+                    .then(res=>{
+                        console.log('after saving parcel', res.data)
+                    }).catch(err=>{
+                        err.message
+                    })
             }
         });
 
@@ -229,6 +223,7 @@ const SendParcel = () => {
                                 {...register("senderName", {
                                     required: true,
                                 })}
+                                defaultValue={user?.displayName}
                                 className="input w-full"
                                 placeholder="Sender Name"
                             />
@@ -273,6 +268,7 @@ const SendParcel = () => {
                                 {...register("senderEmail", {
                                     required: true,
                                 })}
+                                defaultValue={user?.email}
                                 className="input w-full"
                                 placeholder="Sender Email"
                             />
