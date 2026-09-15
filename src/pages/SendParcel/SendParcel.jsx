@@ -56,6 +56,7 @@ const SendParcel = () => {
         }
         
         console.log( 'cost = ',cost);
+        data.cost =cost;
 
         //sweetAlert 2 added in confirmation
         Swal.fire({
