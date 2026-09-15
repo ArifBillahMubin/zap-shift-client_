@@ -8,6 +8,8 @@ import Register from "../pages/Auth/Register/Register";
 import BeARider from "../pages/BeARider/BeARider";
 import PrivateRoute from "./PrivateRoute";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import DashboardLayout from "../layout/DashboardLayout";
+import MyParcels from "../pages/Dashboard/User/MyParcels";
 
 export const router = createBrowserRouter([
     {
@@ -47,5 +49,17 @@ export const router = createBrowserRouter([
                 element:<Register></Register>
             }
         ]
+    },
+    {
+        path:"/dashboard",
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children:[
+            {
+                path:"my-parcels",
+                element: <MyParcels></MyParcels>
+
+            }
+        ]
+
     }
 ]);
