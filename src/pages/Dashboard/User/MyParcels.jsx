@@ -15,6 +15,7 @@ import {
     Trash2,
 } from "lucide-react";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
     const { user } = useAuth();
@@ -227,6 +228,12 @@ const MyParcels = () => {
                                     </th>
 
                                     <th className="px-5 py-4 font-medium">
+                                        payment status
+                                    </th>
+                                    <th className="px-5 py-4 font-medium">
+                                        Delivery status
+                                    </th>
+                                    <th className="px-5 py-4 font-medium">
                                         Date
                                     </th>
 
@@ -316,6 +323,38 @@ const MyParcels = () => {
                                             <span className="font-semibold text-secondary">
                                                 ৳{parcel.cost}
                                             </span>
+                                        </td>
+
+                                        {/* ================= PAYMENT STATUS ================= */}
+                                        <td className="px-5 py-4">
+                                            {parcel.paymentStatus === "paid" ? (
+                                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                                                    Paid
+                                                </span>
+                                            ) : (
+                                                <Link
+                                                    to={`/dashboard/payment/${parcel._id}`}
+                                                    className="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold text-secondary bg-primary hover:opacity-90 transition"
+                                                >
+                                                    Pay
+                                                </Link>
+                                            )}
+                                        </td>
+                                        
+                                        {/* ================= PAYMENT STATUS ================= */}
+                                        <td className="px-5 py-4">
+                                            {parcel.paymentStatus === "paid" ? (
+                                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                                                    Paid
+                                                </span>
+                                            ) : (
+                                                <Link
+                                                    to={`/dashboard/payment/${parcel._id}`}
+                                                    className="inline-flex items-center justify-center px-3 py-1.5 rounded-lg text-xs font-semibold text-secondary bg-primary hover:opacity-90 transition"
+                                                >
+                                                    Pay
+                                                </Link>
+                                            )}
                                         </td>
 
                                         {/* ================= DATE ================= */}
